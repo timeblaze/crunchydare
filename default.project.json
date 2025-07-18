@@ -1,0 +1,27 @@
+{
+	"name": "source-syncing",
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"$path": "src/ReplicatedStorage",
+			"Packages": {
+				"$className": "Folder",
+				"$path": "roblox_packages"
+			},
+			"Generated": {
+				"$className": "Folder",
+				"$path": "generated"
+			}
+		},
+		"ServerScriptService": {
+			"$path": "src/ServerScriptService"
+		},
+		"ServerStorage": {
+			"$path": "src/ServerStorage"
+		},
+		"StarterPlayer": {
+			"$path": "src/StarterPlayer"
+		}
+	},
+	"globIgnorePaths": ["**/*.txt", "**/*.toml"]
+}

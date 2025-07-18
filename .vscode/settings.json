@@ -1,0 +1,171 @@
+{
+  "vsicons.associations.files": [
+    { "icon": "ModuleScript-dark", "extensions": ["luau"], "format": "png" },
+    { "icon": "luau", "extensions": ["luaurc"], "format": "svg" },
+    {
+      "icon": "Model-dark",
+      "extensions": ["rbxm", "model.json"],
+      "format": "png"
+    },
+    {
+      "icon": "Configuration-dark",
+      "extensions": [
+        "init.meta.json",
+        "stylua.toml",
+        "selene.toml",
+        "rokit.toml",
+        "asphalt.toml"
+      ],
+      "filename": true,
+      "format": "png"
+    },
+    {
+      "icon": "WorldModel-dark",
+      "extensions": ["project.json"],
+      "format": "png"
+    },
+    {
+      "icon": "pesde",
+      "extensions": ["pesde.toml"],
+      "filename": true,
+      "format": "svg"
+    },
+    { "icon": "Overdare", "extensions": ["ovjowld"], "format": "png" },
+    {
+      "icon": "LocalScript-dark",
+      "extensions": ["client.luau"],
+      "format": "png"
+    },
+    { "icon": "Script-dark", "extensions": ["server.luau"], "format": "png" },
+    {
+      "icon": "LocalScript-dark",
+      "extensions": ["client.lua"],
+      "format": "png"
+    },
+    { "icon": "Script-dark", "extensions": ["server.lua"], "format": "png" }
+  ],
+  "vsicons.associations.folders": [
+    {
+      "icon": "lune",
+      "extensions": ["lune"],
+      "format": "svg"
+    },
+    {
+      "icon": "PackageLink-dark",
+      "extensions": [
+        "lune_packages",
+        "roblox_packages",
+        "luau_packages",
+        "Packages"
+      ],
+      "format": "png"
+    },
+    {
+      "icon": "ServerScriptService-dark",
+      "extensions": ["server"],
+      "format": "png"
+    },
+    {
+      "icon": "ReplicatedStorage-dark",
+      "extensions": ["shared"],
+      "format": "png"
+    },
+    {
+      "icon": "StarterPlayerScripts-dark",
+      "extensions": ["client"],
+      "format": "png"
+    },
+
+    { "icon": "Lighting-dark", "extensions": ["Lighting"], "format": "png" },
+    {
+      "icon": "MaterialService-dark",
+      "extensions": ["MaterialService"],
+      "format": "png"
+    },
+    { "icon": "Players-dark", "extensions": ["Players"], "format": "png" },
+    {
+      "icon": "ReplicatedFirst-dark",
+      "extensions": ["ReplicatedFirst"],
+      "format": "png"
+    },
+    {
+      "icon": "ReplicatedStorage-dark",
+      "extensions": ["ReplicatedStorage"],
+      "format": "png"
+    },
+    {
+      "icon": "ServerScriptService-dark",
+      "extensions": ["ServerScriptService"],
+      "format": "png"
+    },
+    {
+      "icon": "ServerStorage-dark",
+      "extensions": ["ServerStorage"],
+      "format": "png"
+    },
+    {
+      "icon": "SoundService-dark",
+      "extensions": ["SoundService"],
+      "format": "png"
+    },
+    {
+      "icon": "StarterCharacterScripts-dark",
+      "extensions": ["StarterCharacterScripts"],
+      "format": "png"
+    },
+    {
+      "icon": "StarterGui-dark",
+      "extensions": ["StarterGui"],
+      "format": "png"
+    },
+    {
+      "icon": "StarterPack-dark",
+      "extensions": ["StarterPack"],
+      "format": "png"
+    },
+    {
+      "icon": "StarterPlayer-dark",
+      "extensions": ["StarterPlayer"],
+      "format": "png"
+    },
+    {
+      "icon": "StarterPlayerScripts-dark",
+      "extensions": ["StarterPlayerScripts"],
+      "format": "png"
+    },
+    { "icon": "Teams-dark", "extensions": ["Teams"], "format": "png" },
+    {
+      "icon": "TestService-dark",
+      "extensions": ["TestService"],
+      "format": "png"
+    },
+    {
+      "icon": "TextChatService-dark",
+      "extensions": ["TextChatService"],
+      "format": "png"
+    },
+    { "icon": "Workspace-dark", "extensions": ["Workspace"], "format": "png" }
+  ],
+  "luau-lsp.require.useOriginalRequireByStringSemantics": true,
+  "luau-lsp.sourcemap.enabled": true,
+  "luau-lsp.completion.imports.ignoreGlobs": [
+	".playground/**",
+	"out/**",
+	".pesde/**",
+	"lune_packages/.pesde/**",
+	"roblox_packages/.pesde/**",
+	"luau_packages/.pesde/**",
+	"lune/**",
+	"**/*.server.luau",
+	"**/*.client.luau",
+  ],
+  "workbench.iconTheme": "vscode-icons",
+  "luau-lsp.ignoreGlobs": [
+	".playground/**",
+	"out/**",
+	".pesde/**",
+	"lune_packages/.pesde/**",
+	"roblox_packages/.pesde/**",
+	"luau_packages/.pesde/**",
+  ]
+}

@@ -2,3 +2,6 @@
 lune_packages
 luau_packages
 roblox_packages
+out
+.playground
+generated
