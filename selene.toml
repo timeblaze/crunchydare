@@ -1,4 +1,11 @@
-exclude = ["out/**"]
+exclude = [
+	"out/**",
+	"darklua_build/**",
+	".pesde/**",
+	"roblox_project/**",
+	"luau_packages/**",
+	"lune_packages/**",
+]
 std = "luau+roblox"
 
 [lints]
