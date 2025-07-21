@@ -6,7 +6,6 @@
 [tools]
 rojo = "UpliftGames/rojo@7.5.1-uplift.syncback.rc.21"
 ovjo = "jiwonz/ovjo@0.0.10"
-dalbit = "CavefulGames/dalbit@0.2.3"
 selene = "Kampfkarren/selene@0.28.0"
 luau-lsp = "JohnnyMorganz/luau-lsp@1.52.1"
 stylua = "JohnnyMorganz/StyLua@2.1.0"
