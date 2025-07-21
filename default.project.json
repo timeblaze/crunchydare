@@ -39,7 +39,6 @@
       "wally.lock",
       "pesde.toml",
       "pesde.lock",
-      "injected/**",
       "generated/**"
     ]
   }
