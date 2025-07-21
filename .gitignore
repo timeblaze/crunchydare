@@ -6,5 +6,4 @@ out
 .playground
 generated
 sourcemap.json
-out_src
 darklua_build
