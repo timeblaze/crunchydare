@@ -13,7 +13,7 @@ include = [ # List of globs for files to include while building (also copied ove
 ignore = [ "*.d." ] # List of globs for files to ignore (also ignores files for files under the input path)
 
 silent = false # If set to true, silences all non error messages.
-watch = true # If set to true, listens to any changes to any input / build file, and automatically re-runs the build script.
+watch = false # If set to true, listens to any changes to any input / build file, and automatically re-runs the build script.
 
 temp_dir_keep = false # If true, keeps the temporary build directory that's created after finishing.
 temp_dir_location = "."
