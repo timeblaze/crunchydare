@@ -1,3 +1,8 @@
 {
-	"className": "StarterPlayerScripts"
+  "attributes": {
+    "ovdr_ref": {
+      "Int32": 155
+    }
+  },
+  "className": "StarterPlayerScripts"
 }

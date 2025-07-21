@@ -4,6 +4,6 @@
   },
   "languageMode": "strict",
   "lint": {
-	"LocalShadow": false
+    "LocalShadow": false
   }
 }

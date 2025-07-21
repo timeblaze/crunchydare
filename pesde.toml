@@ -11,6 +11,7 @@ environment = "roblox"
 [scripts]
 roblox_sync_config_generator = ".pesde/scripts/roblox_sync_config_generator.luau"
 sourcemap_generator = ".pesde/scripts/sourcemap_generator.luau"
+dev = ".pesde/darklua_build/darklua_build.luau"
 
 [indices]
 default = "https://github.com/pesde-pkg/index"
@@ -26,7 +27,14 @@ pesde = "^0.7.0-rc.1"
 scripts = { name = "jiwonz/pesde_scripts_rojo", version = "^0.1.0-rc.1", target = "lune" }
 pathfs = { name = "jiwonz/pathfs", version = "^0.6.0-rc.7", target = "lune" }
 dirs = { name = "jiwonz/dirs", version = "^0.5.1", target = "lune" }
+base91-luau = { name = "jiwonz/base91", version = "^0.1.0-rc.1", target = "luau" }
+squash-luau = { name = "jiwonz/squash", version = "^3.0.0-rc.1", target = "luau" }
+darklua_build = { repo = "jiwonz/lune_darklua_build", rev = "1bf7fc3" }
 
 [dependencies]
 crunchyroll = { wally = "ffrostfall/crunchyroll", version = "^0.1.0" }
-base91 = { wally = "dekkonot/base91", version = "^1.1.0" }
+base91 = { name = "jiwonz/base91", version = "^0.1.0-rc.1" }
+squash = { name = "jiwonz/squash", version = "^3.0.0-rc.1" }
+
+[patches]
+"wally#ffrostfall/crunchyroll" = { "0.1.0 roblox" = "patches/wally#ffrostfall+crunchyroll-0.1.0+roblox.patch" }

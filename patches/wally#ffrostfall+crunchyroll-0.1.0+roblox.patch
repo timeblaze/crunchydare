@@ -1,0 +1,236 @@
+diff --git a/src/animation_solver.luau b/src/animation_solver.luau
+index 922f844..783606f 100644
+--- a/src/animation_solver.luau
++++ b/src/animation_solver.luau
+@@ -1,5 +1,5 @@
+-local animation_asset = require("./roblox/animation_asset")
+-local create_rig = require("./rig")
++local animation_asset = require(script.Parent.roblox.animation_asset)
++local create_rig = require(script.Parent.rig)
+ 
+ export type AnimationTrack = {
+ 	-- 0-1
+@@ -32,6 +32,13 @@ local function solve_fade_time_influence(
+ 	end
+ end
+ 
++local function lerpVector3(start: Vector3, goal: Vector3, alpha: number): Vector3
++	local x = start.X + (goal.X - start.X) * alpha
++	local y = start.Y + (goal.Y - start.Y) * alpha
++	local z = start.Z + (goal.Z - start.Z) * alpha
++	return Vector3.new(x, y, z)
++end
++
+ local function animation_solver(
+ 	rig: create_rig.Identity,
+ 	tracks: {
+@@ -88,28 +95,33 @@ local function animation_solver(
+ 
+ 			if left_pose and right_pose then
+ 				--stylua: ignore
++				local t = left_pose.easing_function((real_time - left_pose.time) / (right_pose.time - left_pose.time))
++				local doubleLerped = CFrame.new(lerpVector3(left_pose.coordinate_frame.Position, right_pose.coordinate_frame.Position, t)) * left_pose.coordinate_frame:Lerp(
++						right_pose.coordinate_frame,
++						t
++					).Rotation
++				local newTransform = CFrame.new(lerpVector3(node.transform.Position, doubleLerped.Position, influence)) * node.transform:Lerp(
++					doubleLerped,
++					influence
++				)
+ 				node.transform, node.priority =
+-					node.transform:Lerp(
+-						-- Doubled lerped for blending
+-						left_pose.coordinate_frame:Lerp(
+-							right_pose.coordinate_frame,
+-							left_pose.easing_function((real_time - left_pose.time) / (right_pose.time - left_pose.time))
+-						),
+-						influence
+-					), priority
++					newTransform, priority
+ 			elseif left_or_right then
++				local newTransform = CFrame.new(lerpVector3(node.transform.Position, left_or_right.coordinate_frame.Position, influence)) * node.transform:Lerp(
++					left_or_right.coordinate_frame,
++					influence
++				)
+ 				node.transform, node.priority =
+-					node.transform:Lerp(left_or_right.coordinate_frame, influence), priority
++					newTransform, priority
+ 			end
+ 		end
+ 	end
+ 
+ 	result_coordinate_frames["root"] = root
+ 	for _, limb in limb_array do
+-		result_coordinate_frames[limb.name] = result_coordinate_frames[limb.depends_on]
+-			* limb.c0
++		result_coordinate_frames[limb.name] =
++			limb.c0
+ 			* limb.transform
+-			* limb.c1
+ 	end
+ end
+ 
+diff --git a/src/init.luau b/src/init.luau
+index 3aeaf13..fd22809 100644
+--- a/src/init.luau
++++ b/src/init.luau
+@@ -1,19 +1,19 @@
+-local animation_asset = require("@self/roblox/animation_asset")
+-local animation_solver = require("@self/animation_solver")
+-local rig = require("@self/rig")
++local animation_asset = require(script.roblox.animation_asset)
++local animation_solver = require(script.animation_solver)
++local rig = require(script.rig)
+ 
+ --[=[
+ 	@class Crunchyroll
+-	
++
+ 	The root module.
+ ]=]
+ 
+ --[=[
+ 	@function load_keyframe_sequence
+ 	@within Crunchyroll
+-	
++
+ 	Load a keyframe sequence from Roblox. This will return an AnimationAsset.
+-	
++
+ 	@param keyframe_sequence KeyframeSequence
+ 	@return AnimationAsset
+ ]=]
+@@ -21,9 +21,9 @@ local rig = require("@self/rig")
+ --[=[
+ 	@function create_rig
+ 	@within Crunchyroll
+-	
++
+ 	Create a rig from a model. This will return a Rig.
+-	
++
+ 	@param rig_hierarchy Limb
+ 	@return Rig
+ ]=]
+@@ -31,7 +31,7 @@ local rig = require("@self/rig")
+ --[=[
+ 	@function solve_animation
+ 	@within Crunchyroll
+-	
++
+ 	The primary function of the module. This will solve the animation for a rig.
+ 	Example:
+ 	```lua
+@@ -47,7 +47,7 @@ local rig = require("@self/rig")
+ 			},
+ 		}, character.HumanoidRootPart.CFrame)
+ 	```
+-	
++
+ 	@param rig Rig
+ 	@param tracks { [AnimationAsset]: AnimationTrack }
+ 	@param root CFrame
+@@ -55,20 +55,20 @@ local rig = require("@self/rig")
+ 
+ --[=[
+ 	@class Rig
+-	
++
+ 	An animated rig. Pass this into the animation solver.
+ ]=]
+ 
+ --[=[
+ 	@prop result_coordinate_frames { [string]: CFrame }
+ 	@within Rig
+-	
++
+ 	The result table of the rig. Structured as { [limb name]: CFrame }
+ ]=]
+ 
+ --[=[
+ 	@class AnimationAsset
+-	
++
+ 	An animation asset. This stores the animation length, and the keyframes.
+ ]=]
+ 
+@@ -80,7 +80,7 @@ local rig = require("@self/rig")
+ 	.weight number
+ 	.alpha number
+ 	.priority number
+-	
++
+ 	This table describes the state of an animation. It is agnostic to the animation asset.
+ ]=]
+ 
+@@ -90,8 +90,8 @@ local rig = require("@self/rig")
+ 	.name string
+ 	.c0 CFrame
+ 	.c1 CFrame
+-	.depends_on string 
+-	
++	.depends_on string
++
+ 	This is the Crunchyroll equivalent of a Roblox Motor6D.
+ 	`depends_on` is how the hierarchy works; for example "Head" depends on "Torso"
+ ]=]
+diff --git a/src/roblox/animation_asset.luau b/src/roblox/animation_asset.luau
+index cfbcb84..05b426c 100644
+--- a/src/roblox/animation_asset.luau
++++ b/src/roblox/animation_asset.luau
+@@ -1,8 +1,8 @@
+-local easing_enum_map = require("./easing_enum_map")
++local easing_enum_map = require(script.Parent.easing_enum_map)
+ 
+ export type PoseNode = {
+-	easing_direction: Enum.PoseEasingDirection,
+-	easing_style: Enum.PoseEasingStyle,
++	easing_direction: number,
++	easing_style: number,
+ 
+ 	easing_function: (alpha: number) -> number,
+ 
+@@ -35,12 +35,12 @@ local function recursive_tree_from_pose(
+ 	end
+ 
+ 	poses[root_pose.Name] = {
+-		easing_direction = root_pose.EasingDirection,
+-		easing_style = root_pose.EasingStyle,
++		easing_direction = 1,
++		easing_style = 1,
+ 
+ 		coordinate_frame = root_pose.CFrame,
+ 
+-		easing_function = easing_enum_map[root_pose.EasingStyle][root_pose.EasingDirection],
++		easing_function = easing_enum_map[1][1],
+ 
+ 		name = root_pose.Name,
+ 		time = if keyframe then keyframe.Time else 0.5,
+diff --git a/src/roblox/easing_enum_map.luau b/src/roblox/easing_enum_map.luau
+index b192815..fc2f933 100644
+--- a/src/roblox/easing_enum_map.luau
++++ b/src/roblox/easing_enum_map.luau
+@@ -1,15 +1,15 @@
+ local Enum = Enum or (require("@lune/roblox").Enum :: any) :: typeof(Enum)
+ 
+-local easings = require("../easings")
++local easings = require(script.Parent.Parent.easings)
+ 
+-local EASING_IN = Enum.PoseEasingDirection.In
+-local EASING_OUT = Enum.PoseEasingDirection.Out
+-local EASING_IN_OUT = Enum.PoseEasingDirection.InOut
++local EASING_IN = 1
++local EASING_OUT = 2
++local EASING_IN_OUT = 3
+ 
+-local LINEAR = Enum.PoseEasingStyle.Linear
+-local CUBIC = Enum.PoseEasingStyle.Cubic
+-local BOUNCE = Enum.PoseEasingStyle.Bounce
+-local ELASTIC = Enum.PoseEasingStyle.Elastic
++local LINEAR = 1
++local CUBIC = 2
++local BOUNCE = 3
++local ELASTIC = 4
+ 
+ return {
+ 	[LINEAR] = {

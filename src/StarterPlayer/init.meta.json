@@ -1,3 +1,13 @@
 {
-	"className": "StarterPlayer"
+  "className": "StarterPlayer",
+  "attributes": {
+    "ovdr_ref": {
+      "Int32": 154
+    }
+  },
+  "properties": {
+    "ClassicDeath": {
+      "Bool": true
+    }
+  }
 }

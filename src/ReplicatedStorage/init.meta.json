@@ -1,3 +1,8 @@
 {
-	"className": "ReplicatedStorage"
+  "className": "ReplicatedStorage",
+  "attributes": {
+    "ovdr_ref": {
+      "Int32": 145
+    }
+  }
 }

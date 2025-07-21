@@ -1,0 +1,23 @@
+input = "src" # Path to what to process (defaults to "src").
+output = "darklua_build" # Path to the output folder (defaults to "out").
+
+[options] # An optional dictionary containing a set of build options.
+include = [ # List of globs for files to include while building (also copied over to the output)
+    "roblox_packages/**/*",
+	".darklua.json5",
+	"*.project.json",
+	"sourcemap.json",
+	"shared_packages/**/*",
+	"generated/**/*",
+]
+ignore = [ "*.d." ] # List of globs for files to ignore (also ignores files for files under the input path)
+
+silent = false # If set to true, silences all non error messages.
+watch = true # If set to true, listens to any changes to any input / build file, and automatically re-runs the build script.
+
+temp_dir_keep = false # If true, keeps the temporary build directory that's created after finishing.
+temp_dir_location = "."
+
+[options.scripts] # An optional dictionary containing a list of scripts to run at certain points while building. All commands are ran inside the temporary build directory.
+preProcess = "rojo sourcemap default.project.json -o sourcemap.json --include-non-scripts" # An array / string of scripts to run before processing with darklua
+postProcess = "ovjo sync -i ../out" # An array / string of scripts to run after processing with darklua, and before copying over files to the selected output

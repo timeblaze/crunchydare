@@ -1,14 +1,15 @@
 local process = require("@lune/process")
+local task = require("@lune/task")
 
-process.exec("lune", { "run", "generate" }, {
+process.exec("rojo", { "sourcemap", "-o", "sourcemap.json", "--include-non-scripts" }, {
 	stdio = "inherit",
 })
-process.exec("ovjo", { "build", "-o", "out" }, {
+
+task.spawn(process.exec, "ovjo", { "sync", "-i", "out", "--watch" }, {
 	stdio = "inherit",
 	env = {
 		OVJO_LOCALE = "en",
 	}
-})
-process.exec("lune", { "run", "ovdr", "studio" }, {
-	stdio = "inherit",
-})
+} :: any)
+
+-- TO-DO: Add watch for .umap and syncback
