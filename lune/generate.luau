@@ -55,8 +55,9 @@ do
 			stringValue.Value = buffer.tostring(base91.encodeBuffer(squash.tobuffer(cursor)))
 			fs.writeFile(valuePath, roblox.serializeModel({ stringValue :: any }))
 
+			-- validate the deserialization
 			local c = squash.frombuffer(squash.tobuffer(cursor))
-			local kfs = KeyframeSequence.serializer.des(c)
+			KeyframeSequence.serializer.des(c)
 		end
 	end)
 	if tempDir:isDir() then
